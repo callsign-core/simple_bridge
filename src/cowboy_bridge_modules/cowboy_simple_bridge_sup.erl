@@ -38,7 +38,16 @@ init([]) ->
         {max_keepalive, 100}
     ],
 
-    cowboy:start_http(http, 100, [{ip, IP}, {port, Port}], Opts),
+		SSLEnable = simple_bridge_util:get_ssl_enable(cowboy),
+		SSLOptions = simple_bridge_util:get_ssl_options(cowboy),
+		io:format("SSLEnable : ~p,  SSLOptions : ~p~n", [SSLEnable, SSLOptions]),
+		case SSLEnable of 
+			false ->
+				cowboy:start_http(http, 100, [{ip, IP}, {port, Port}], Opts);
+			true ->
+				SSLConfig = [{ip, IP}, {port, Port}] ++ SSLOptions,
+				cowboy:start_https(https, 100, SSLConfig, Opts)
+		end,
 
     {ok, { {one_for_one, 5, 10}, []}}.
 
