@@ -3,6 +3,9 @@
 -export ([
         loop/1
     ]).
+-ifdef(OTP_RELEASE).
+-compile({nowarn_deprecated_function, [{erlang, get_stacktrace, 0}]}).
+-endif.
 
 %% We catch this because if it fails otherwise, Mochiweb just silently handles
 %% it, and we'd rather see the error. So print it to the console.

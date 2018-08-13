@@ -7,6 +7,10 @@
 -behaviour (simple_bridge).
 -include("simple_bridge.hrl").
 
+-ifdef(OTP_RELEASE).
+-compile({nowarn_deprecated_function, [{erlang, get_stacktrace, 0}]}).
+-endif.
+
 %% REQUEST EXPORTS
 
 -export([

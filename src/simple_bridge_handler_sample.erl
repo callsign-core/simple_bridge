@@ -6,7 +6,9 @@
         ws_message/3,
         ws_info/3,
         ws_terminate/3]).
-
+-ifdef(OTP_RELEASE).
+-compile({nowarn_deprecated_function, [{erlang, get_stacktrace, 0}]}).
+-endif.
 
 run(Bridge) ->
     try

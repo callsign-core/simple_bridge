@@ -16,6 +16,10 @@
     make_response/2
 ]).
 
+-ifdef(OTP_RELEASE).
+-compile({nowarn_deprecated_function, [{erlang, get_stacktrace, 0}]}).
+-endif.
+
 -include("simple_bridge.hrl").
 
 -callback init(req())                        -> req().
